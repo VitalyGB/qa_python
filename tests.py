@@ -1,7 +1,6 @@
 import pytest
 from main import BooksCollector
 
-
 class TestBooksCollector:
 
     @pytest.mark.parametrize("book_name", [
@@ -14,15 +13,19 @@ class TestBooksCollector:
         assert book_name in collection.get_books_genre()
         assert collection.get_book_genre(book_name) == ''
 
-    def test_set_and_get_book_genre(self, collection):
+    def test_set_book_genre(self, collection):
         book = "Книга"
         collection.add_new_book(book)
         collection.set_book_genre(book, "Фантастика")
         assert collection.get_book_genre(book) == "Фантастика"
 
+    def test_get_book_genre_returns_empty_for_new_book(self, collection):
+        book = "Книга"
+        collection.add_new_book(book)
+        assert collection.get_book_genre(book) == ''
+
     def test_set_genre_for_nonexistent_book_does_nothing(self, collection):
         collection.set_book_genre("Неизвестная книга", "Фантастика")
-        # Метод должен ничего не менять, потому книга отсутствует
         assert collection.get_book_genre("Неизвестная книга") is None
 
     def test_get_books_with_specific_genre(self, collection_five_books):
