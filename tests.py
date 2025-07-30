@@ -24,6 +24,13 @@ class TestBooksCollector:
         collection.add_new_book(book)
         assert collection.get_book_genre(book) == ''
 
+    def test_get_book_genre_returns_correct_genre_from_dict(self, collection):
+        book = "Книга"
+        genre = "Детективы"
+        # Проставляем жанр напрямую, без использования set_book_genre
+        collection.books_genre[book] = genre
+        assert collection.get_book_genre(book) == genre
+
     def test_set_genre_for_nonexistent_book_does_nothing(self, collection):
         collection.set_book_genre("Неизвестная книга", "Фантастика")
         assert collection.get_book_genre("Неизвестная книга") is None
